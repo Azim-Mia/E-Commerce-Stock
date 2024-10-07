@@ -6,7 +6,10 @@ io.on('connection', (socket)=>{
   console.log("New User is connected");
   socket.on('disconnetd', ()=>{
     console.log("User is disconnetd");
-  })
+  });
+});
+io.on('connection', (socket)=>{
+    socket.send("hello socket");
 })
 }
 module.exports = socketConfig;

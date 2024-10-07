@@ -1,17 +1,11 @@
-const {Schema, model} =require('mongoose');
+const mongoose =require('mongoose');
 const bcrypt=require('bcryptjs');
-const userAccountSchema = new Schema({
- firestName:{
+const userAccountSchema = new mongoose.Schema({
+ name:{
    type:String,
    lowercase:true,
    trim:true,
    required:[true, "User firestName is required"],
- },
- lastName:{
-   type:String,
-   lowercase:true,
-   trim:true,
-   required:[true, "User last Name is required"]
  },
     email:{
         type: String,
@@ -33,19 +27,23 @@ const userAccountSchema = new Schema({
    required:[true, 'no empty Password'],
   set:(v)=>bcrypt.hashSync(v,bcrypt.genSaltSync(10)),
   },
-  urlToImage:{
+  phone:{
+    type:Number,
+    required:[true, "phone number is required"],
+  },
+  image:{
     type:String,
     trim:true,
     required:[true, "Image must be required"],
   },
   status:{
     type:String,
-    enum:["actie", "inactive"],
+    enum:['active', 'inactive'],
   },
-  isBaned:{
-    type:Boolean,
-    default:false,
-  },
+  updatedAt: {
+type: Date,
+default: Date.now,
+},
 },{timestams:true});
-const UserSchema = new model("userAccountSchema", userAccountSchema);
-module.exports = UserSchema;
+const User = new mongoose.model("User", userAccountSchema);
+module.exports = User;
